@@ -23,12 +23,20 @@
 #
 # Copyright 2015 Dan Foster, unless otherwise noted.
 #
-class weechat inherits weechat::params {
-
-
+class weechat (
+  $weechat_port = $::weechat::params::weechat_port
+) inherits weechat::params {
   $_packages  = $weechat::params::packages
   package { $_packages:
     ensure => present
+  }
+
+  if defined(Class['firewall']) {
+  	firewall { "050 accept Weechat port":
+      port   => $weechat_port,
+      proto  => tcp,
+  	  action => accept,
+    }
   }
 
 }
