@@ -31,7 +31,7 @@ class weechat (
     ensure => present
   }
 
-  if defined(Class['firewall']) {
+  if defined('firewall') {
   	firewall { "050 accept Weechat port":
       port   => $weechat_port,
       proto  => tcp,
